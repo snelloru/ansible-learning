@@ -1,0 +1,4 @@
+--- # Playbook to deploy app
+  - name: download jars from nexus
+    shell: wget -q -O /tmp/deploy.war http://www.shopizer.com/#!download
+
