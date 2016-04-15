@@ -1,21 +1,21 @@
 ---
  - name: Copy jar file
-   copy: src=/tmp/deploy.war dest=/home/ycard/application_files/ycard-new.war owner=ycard group=ycard mode=0644
+   copy: src={{tmp_bin_in_control}}/{{ycard_support_version_jar}} dest={{remote_temp_dest}}/{{ycard_support_version_jar}} owner={{deploy_user}} group={{deploy_group}} mode=0644
 
  - name: stop tomcat
-   shell: /var/lib/tomcat/webapps/stop.sh
+   shell: "{{webapp_dir}}/stop.sh"
 
  - name: check if tomcat process is not running 
    command: "echo stopped "
 
  - name: Take backup of current Ycard.war file
-   command: "mv /var/lib/tomcat/webapps/ycard.war /home/ycard/application_files/backup/yard.war-bakup"
+   command: "mv {{webapp_dir}}/{{ycard_support_jar}} {{remote_app_backup_dir}}/{{ycard_support_jar}}-backup"
 
  - name: Copy new war file to webapps
-   command: mv /home/ycard/application_files/ycard-new.war /var/lib/tomcat/webapps/ycard.war
+   command: mv {{remote_temp_dest}}/{{ycard_support_version_jar}} {{webapp_dir}}/{{ycard_support_jar}} 
 
  - name: start tomcat
-   command: /var/lib/tomcat/webapps/start.sh
+   shell: "{{webapp_dir}}/start.sh"
 
  - name: Make sure process is running
    shell: ps -ef|grep sleep
