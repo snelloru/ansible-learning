@@ -3,19 +3,24 @@
    copy: src={{tmp_bin_in_control}}/{{ycard_service_version_jar}} dest={{remote_temp_dest}}/{{ycard_service_version_jar}} owner={{deploy_user}} group={{deploy_group}} mode=0644
 
  - name: stop tomcat
-   shell: "{{ webapp_dir }}/stop.sh"
+   shell: "{{ service_tomcat }}/bin/shutdown.sh"
 
  - name: check if tomcat process is not running 
-   command: "echo stopped "
+   shell: ps -ef|grep {{ service_tomcat }}
+   register: ps_result
+   ignore_errors: false
+
+ - debug: msg="{{ps_result.stdout}}"
+ - debug: msg="{{ps_result.stderr}}"
 
  - name: Take backup of current Ycard.war file
-   command: "mv {{webapp_dir}}/{{ycard_service_jar}} {{remote_app_backup_dir}}/{{ycard_service_jar}}-backup"
+   command: "mv {{service_tomcat}}/webapps/{{ycard_service_jar}} {{remote_app_backup_dir}}/{{ycard_service_jar}}-backup"
 
  - name: Copy new war file to webapps
-   command: mv {{remote_temp_dest}}/{{ycard_service_version_jar}} {{webapp_dir}}/{{ycard_service_jar}} 
+   command: mv {{remote_temp_dest}}/{{ycard_service_version_jar}} {{service_tomcat}}/webapps/{{ycard_service_jar}} 
 
  - name: start tomcat
-   shell: "{{webapp_dir}}/start.sh"
+   shell: "{{service_tomcat}}/../bin/startup.sh"
 
  - name: Make sure process is running
    shell: ps -ef|grep sleep
