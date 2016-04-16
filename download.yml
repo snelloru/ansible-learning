@@ -1,5 +1,5 @@
 --- # Deploy ycard app to tomcat
-- hosts: localhost
+- hosts: controlserver
   gather_facts: no
   remote_user: ycard
   sudo: no
