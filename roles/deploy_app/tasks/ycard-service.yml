@@ -1,5 +1,5 @@
 ---
- - name: Copy jar file
+ - name: Copy jar file from Control server to remote appserver
    copy: src={{tmp_bin_in_control}}/{{ycard_service_version_jar}} dest={{remote_temp_dest}}/{{ycard_service_version_jar}} owner={{deploy_user}} group={{deploy_group}} mode=0644
 
  - name: stop tomcat
@@ -9,6 +9,9 @@
    shell: ps -ef|grep {{ service_tomcat }}
    register: ps_result
    ignore_errors: false
+ - name: If still running, wait for 2 mins and kill the process
+
+ - name: Check the process once again, if still running, fail it here
 
  - debug: msg="{{ps_result.stdout}}"
  - debug: msg="{{ps_result.stderr}}"
@@ -28,3 +31,9 @@
 
  - name: verify ps results
    debug: results
+
+ - name: If process is not running, wait for 2 mins 
+
+ - name: Check if port is open and listening 
+
+ - name: post deploy health checks

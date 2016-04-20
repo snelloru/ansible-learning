@@ -1,7 +1,7 @@
 --- # Deploy ycard app to tomcat
-- hosts: development
+- hosts: appserver
   gather_facts: no
-  remote_user: ycard
+  remote_user: {{ remote_user }}
   sudo: no
   roles:
      - deploy_app

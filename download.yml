@@ -1,7 +1,9 @@
 --- # Deploy ycard app to tomcat
 - hosts: controlserver
+  vars:
+       local_download: /home/{{remote_user}}/local_download/{{release_version}}
   gather_facts: no
-  remote_user: ycard
+  remote_user: {{ remote_user }}
   sudo: no
   roles:
      - download_app

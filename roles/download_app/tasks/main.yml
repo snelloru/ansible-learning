@@ -1,8 +1,8 @@
 --- # Playbook to download app
  - name: download ycard-service jar from nexus
-   get_url: url=https://oss.sonatype.org/content/repositories/jboss-releases/org/jboss/weld/weld-core/1.0.0-CR1/weld-core-1.0.0-CR1.jar dest=/home/ycard/local_download
+   get_url: url=https://oss.sonatype.org/content/repositories/jboss-releases/org/jboss/weld/weld-core/{{release_version}}-CR1/weld-core-{{release_version}}-CR1.jar dest={{local_download}}
 
  - name: download ycard-support jar from nexus
-   get_url: url=https://oss.sonatype.org/content/repositories/jboss-releases/org/jboss/weld/weld-spi/1.0/weld-spi-1.0.jar dest=/home/ycard/local_download
+   get_url: url=https://oss.sonatype.org/content/repositories/jboss-releases/org/jboss/weld/weld-spi/1.0/weld-spi-1.0.jar dest={{local_download}}
 
 
